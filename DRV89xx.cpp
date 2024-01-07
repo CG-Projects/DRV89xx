@@ -4,6 +4,15 @@
 
 DRV89xx::DRV89xx(SPIClass &spi, int cs_pin, int fault_pin, int sleep_pin) : _spi_settings(4000000, MSBFIRST, SPI_MODE1), _spi(&spi), _cs_pin(cs_pin), _fault_pin(fault_pin), _sleep_pin(sleep_pin) {}
 
+void DRV89xx::setup(SPIClass &spi, uint16_t spi_freq, int cs_pin, int fault_pin, int sleep_pin)
+{
+  _spi = &spi;
+  _spi_settings = SPISettings(spi_freq, MSBFIRST, SPI_MODE1);
+  _cs_pin = cs_pin;
+  _fault_pin = fault_pin;
+  _sleep_pin = sleep_pin;
+}
+
 void DRV89xx::begin()
 {
   Serial.println("DRV89xx begin called");

@@ -26,9 +26,11 @@ class DRV89xx
 {
 
 public:
+    DRV89xx(){};
     DRV89xx(SPIClass &spi, int cs_pin, int fault_pin, int sleep_pin);
-    void begin();
 
+    void setup(SPIClass &spi, uint16_t spi_freq, int cs_pin, int fault_pin, int sleep_pin);
+    void begin();
     void configMotor(byte motor_id, byte hb1, byte hb2, byte pwm_channel, byte reverse_delay, bool free_wheeling);
     byte writeRegister(byte address, byte value);
     byte readRegister(byte address);
