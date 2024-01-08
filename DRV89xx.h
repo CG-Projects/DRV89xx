@@ -64,7 +64,7 @@ public:
     };
 
 private:
-    SPIClass *_spi;
+    SPIClass *_spi = nullptr;
     SPISettings _spi_settings;
     int _cs_pin, _fault_pin, _sleep_pin;
     bool begin_called_ = false;
@@ -99,6 +99,11 @@ public:
         _driver->disableMotor(_motor1);
         _driver->disableMotor(_motor2);
     };
+
+    void updateConfig()
+    {
+        _driver->updateConfig();
+    }
 };
 
 class DRV89xxMotorP3
@@ -130,5 +135,10 @@ public:
         _driver->disableMotor(_motor2);
         _driver->disableMotor(_motor3);
     };
+    
+    void updateConfig()
+    {
+        _driver->updateConfig();
+    }
 };
 #endif

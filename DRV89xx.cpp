@@ -22,7 +22,10 @@ void DRV89xx::begin()
   Serial.println("and run");
 
   // Setup SPI
-  _spi->begin(SCK, MISO, MOSI, _cs_pin);
+  // _spi->begin(SCK, MISO, MOSI, _cs_pin);
+  if (_spi == nullptr)
+    _spi->begin();
+    
   _spi->setHwCs(false);
 
   // Setup pins
@@ -43,7 +46,7 @@ void DRV89xx::begin()
   _config_cache[(int)DRV89xxRegister::OLD_CTRL_3] = 0b10000000; // set Overcurrent protection to the most forgiving setting
   _config_cache[(int)DRV89xxRegister::SR_CTRL_1] = 0b11111111;  // Set slew rate to 2.5us vrs default 0.6us on half bridges (1-8)
   _config_cache[(int)DRV89xxRegister::SR_CTRL_2] = 0b00001111;  // Set slew rate to 2.5us vrs default 0.6us on half bridges (9-12)
-  _config_cache[(int)DRV89xxRegister::PWM_FREQ_CTRL] = 0x02;    // Set all 4 PWM channels to 200Hz 
+  _config_cache[(int)DRV89xxRegister::PWM_FREQ_CTRL] = 0x02;    // Set all 4 PWM channels to 200Hz
 
   writeConfig();
 }
@@ -72,7 +75,7 @@ byte DRV89xx::readRegister(byte address)
 }
 
 void DRV89xx::readErrorStatus(bool print, bool reset)
-{  
+{
   _spi->beginTransaction(_spi_settings);
   if (digitalRead(_fault_pin) == 0)
   {
