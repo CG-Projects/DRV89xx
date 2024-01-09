@@ -24,20 +24,20 @@
 
 class DRV89xx
 {
-
-public:
-    DRV89xx(){};
+public:    
+    DRV89xx() { id = ++cnt; };
     DRV89xx(SPIClass &spi, int cs_pin, int fault_pin, int sleep_pin);
 
     void setup(SPIClass &spi, uint16_t spi_freq, int cs_pin, int fault_pin, int sleep_pin);
     void begin();
+    void setSPI(SPIClass &spi);
     void configMotor(byte motor_id, byte hb1, byte hb2, byte pwm_channel, byte reverse_delay, bool free_wheeling);
     byte writeRegister(byte address, byte value);
     byte readRegister(byte address);
     void readErrorStatus(bool print, bool reset);
     void writeConfig();
     void updateConfig();
-    void clearFault();
+    void clearFault();    
 
     void setMotor(byte motor, byte speed, byte direction)
     {
@@ -64,6 +64,8 @@ public:
     };
 
 private:
+    static uint8_t cnt;
+    uint8_t id;
     SPIClass *_spi = nullptr;
     SPISettings _spi_settings;
     int _cs_pin, _fault_pin, _sleep_pin;
