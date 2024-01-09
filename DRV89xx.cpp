@@ -15,16 +15,17 @@ void DRV89xx::setup(SPIClass &spi, uint16_t spi_freq, int cs_pin, int fault_pin,
 
 void DRV89xx::begin()
 {
-  Serial.println("DRV89xx begin called");
+  Serial.print("DRV89xx begin called..");
   if (begin_called_)
     return; // ignore duplicate begin calls
   begin_called_ = true;
-  Serial.println("and run");
+  Serial.println("and run!");
 
   // Setup SPI
-  // _spi->begin(SCK, MISO, MOSI, _cs_pin);
-  if (_spi == nullptr)
-    _spi->begin();
+  _spi->end();
+  _spi->begin(SCK, MISO, MOSI, _cs_pin);
+  // if (_spi == nullptr)
+  //   _spi->begin();
     
   _spi->setHwCs(false);
 

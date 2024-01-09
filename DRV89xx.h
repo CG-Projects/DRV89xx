@@ -73,6 +73,38 @@ private:
     DRV89xxMotor _motor[DRV89xx_MAX_MOTORS];
 };
 
+class DRV89xxMotorP1
+{
+private:
+    DRV89xx *_driver;
+    int8_t _motor1 = -1, _motor2 = -1;
+
+public:
+    DRV89xxMotorP1(DRV89xx &driver) : _driver(&driver){};
+
+    void begin(int8_t motor1)
+    {
+        _motor1 = motor1;
+    };
+
+    void set(byte speed, byte direction)
+    {
+        _driver->setMotor(_motor1, speed, direction);
+    };
+
+    void disable()
+    {
+        _driver->disableMotor(_motor1);
+    };
+
+    void updateConfig(bool clear_fault)
+    {
+        if (clear_fault)
+            _driver->clearFault();
+        _driver->updateConfig();
+    }
+};
+
 class DRV89xxMotorP2
 {
 private:
@@ -100,8 +132,10 @@ public:
         _driver->disableMotor(_motor2);
     };
 
-    void updateConfig()
+    void updateConfig(bool clear_fault)
     {
+        if (clear_fault)
+            _driver->clearFault();
         _driver->updateConfig();
     }
 };
@@ -135,9 +169,11 @@ public:
         _driver->disableMotor(_motor2);
         _driver->disableMotor(_motor3);
     };
-    
-    void updateConfig()
+
+    void updateConfig(bool clear_fault)
     {
+        if (clear_fault)
+            _driver->clearFault();
         _driver->updateConfig();
     }
 };
