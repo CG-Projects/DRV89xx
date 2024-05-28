@@ -99,11 +99,12 @@ public:
         _driver->disableMotor(_motor1);
     };
 
-    void updateConfig(bool clear_fault = false)
+    byte updateConfig(bool clear_fault = false)
     {
         if (clear_fault)
             _driver->clearFault();
         _driver->updateConfig();
+        return _driver->readRegister(0x00);
     }
 };
 
@@ -134,11 +135,12 @@ public:
         _driver->disableMotor(_motor2);
     };
 
-    void updateConfig(bool clear_fault = false)
+    byte updateConfig(bool clear_fault = false)
     {
         if (clear_fault)
             _driver->clearFault();
         _driver->updateConfig();
+        return _driver->readRegister(0x00);
     }
 };
 
@@ -172,11 +174,12 @@ public:
         _driver->disableMotor(_motor3);
     };
 
-    void updateConfig(bool clear_fault = false)
+    byte updateConfig(bool clear_fault = false)
     {
         if (clear_fault)
             _driver->clearFault();
         _driver->updateConfig();
+        return _driver->readRegister(0x00);
     }
 };
 #endif
